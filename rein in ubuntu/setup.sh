@@ -9,7 +9,12 @@ sudo chmod a+r /etc/apt/keyrings/docker.gpg
 
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 sudo apt-get update
-sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y 
+sudo apt update
+sudo apt-get upgrade -y
+sudo apt upgrade -y
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin curl nano -y
+
+
 # add user to docker group
 sudo groupadd docker
 sudo usermod -aG docker $USER
@@ -17,9 +22,3 @@ newgrp docker
 # start docker on boot
 sudo systemctl enable docker.service
 sudo systemctl enable containerd.service
-
-### Pull images
-docker pull grafana/grafana-oss
-docker pull influxdb
-
-docker compose up -d
